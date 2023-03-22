@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "924514000145",
+    "project_id": "cityscope-4c162",
+    "storage_bucket": "cityscope-4c162.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924514000145:android:7baa90c07907f3439480b0",
+        "android_client_info": {
+          "package_name": "com.tagesolutions.cityscope.city_scope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924514000145-sde36doc0vnitssu9fnhfg0u2omtsba9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA78279FjqfA3hGoEY63og4VIJq8i_Ev-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924514000145-sde36doc0vnitssu9fnhfg0u2omtsba9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
