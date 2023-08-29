@@ -225,7 +225,7 @@ class _NewSignUpState extends State<NewSignUp> {
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+       SnackBar(content: Text('Your Password is too Weak'));
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }

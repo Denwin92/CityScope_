@@ -1,10 +1,15 @@
+import 'package:city_scope/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Feed {
   String description = '';
   String id = '';
   List<String> image = [];
   dynamic location;
-  dynamic timestamp;
+  Timestamp? timestamp;
   String title = '';
+  String? sublocality;
+
 
   Feed();
 
@@ -15,15 +20,17 @@ class Feed {
     location = json['location'];
     timestamp = json['timestamp'];
     title = json ['title'];
+    sublocality = json['sub_locality'];
   }
 
   Map<String,dynamic> toJson() => {
     "description": description,
     "title": title,
-    "image" : ["https://image-prod.iol.co.za/16x9/800/A-wrecked-white-minibus-and-a-wrecked-white-car-entangled-after-a-head-on-crash?source=https://xlibris.public.prod.oc.inl.infomaker.io:8443/opencontent/objects/285910b6-8fcc-5839-838a-0f3e0fdc22f8&operation=CROP&offset=0x132&resize=1408x792"],
+    "image" : image.map((e) => e).toList(),
     "timestamp" : DateTime.now(),
-    "location": '',
+    "location": GeoPoint(position!.latitude, position!.longitude),
     "id" : "",
+    "sub_locality" : placeMark?.subLocality
 
   };
 

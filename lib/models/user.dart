@@ -12,7 +12,7 @@ class CityScopeUser {
   CityScopeUser();
 
   CityScopeUser.fromJson(Map<String, dynamic> json){
-    id = json ['id'];
+    id = json ['id'] ?? '';
     email = json ['email'];
     name = json  ['name'];
     number = json ['number'];

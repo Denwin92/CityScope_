@@ -1,9 +1,7 @@
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:city_scope/ui/forgot_password_screen.dart';
 import 'package:city_scope/ui/new_signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../models/user.dart';
 import 'feed_screen.dart';
 
@@ -25,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
-
       } else {
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) {
           return FeedScreen();

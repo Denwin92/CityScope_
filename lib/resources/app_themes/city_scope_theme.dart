@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:city_scope/resources/app_themes/city_scope_colours.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CityScopeTheme{
   CityScopeTheme._();
@@ -11,7 +12,7 @@ class CityScopeTheme{
 
 
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: 'SpaceGrotesk',
+    fontFamily: GoogleFonts.lato().fontFamily,
     primarySwatch: CityScopeColours.primary,
     textTheme: TextTheme(
 

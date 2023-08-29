@@ -1,10 +1,13 @@
+// import 'dart:html';
 import 'dart:io' as i;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/feed.dart';
 import 'feed_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class LogReportScreen extends StatefulWidget {
   const LogReportScreen({super.key});
@@ -120,7 +123,7 @@ class _LogReportScreenState extends State<LogReportScreen> {
                           borderRadius: BorderRadius.circular(16),
                           child: FittedBox(
                             fit: BoxFit.contain,
-                            child: Image.file(i.File(image?.path??'Awaiting upload')),
+                            child: (image?.path == null) ? Image.network('https://i.imgur.com/sUFH1Aq.png'): Image.file(i.File(image!.path))
                           ),
                         ),
                       ),
@@ -138,34 +141,40 @@ class _LogReportScreenState extends State<LogReportScreen> {
 
                 },
                 child: Text('Submit Report')),
+
           ],
         ),
       ),
     );
   }
 
-  void _onSubmitPressed(){
-
+  void _onSubmitPressed() {
     var formState = _formKey.currentState;
-
-    if (formState!.validate()){
-
+    if (formState!.validate()) {
       formState.save();
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return Scaffold(backgroundColor: Colors.white.withOpacity(0.5), body: Center(child: SpinKitCircle(color: Colors.indigo),),);
+      }));
 
+      FirebaseStorage.instance
+          .ref('files/${DateTime.now().millisecondsSinceEpoch}.jpg')
+          .putFile(i.File(image!.path))
+          .then((value) async {
+            _feed.image.add( await value.ref.getDownloadURL());
       FirebaseFirestore.instance.runTransaction((transaction)async{
 
         transaction.set(FirebaseFirestore.instance.collection('Feed').doc(), _feed.toJson());
 
       }).then((value){
-
         Navigator.pop(context);
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text ("Post submitted, please refresh your page.")));
+
       });
 
 
-
+      });
     }
-
-
   }
 
 }

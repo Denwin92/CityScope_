@@ -1,14 +1,25 @@
 import 'package:city_scope/resources/app_themes/city_scope_theme.dart';
-import 'package:city_scope/ui/login_page.dart';
+import 'package:city_scope/ui/feed_screen.dart';
+import 'package:city_scope/ui/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'firebase_options.dart';
+
+
+Position? position;
+String? _address = "";
+Placemark? placeMark;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // await Future.delayed(const Duration(seconds: 2));
+  // FlutterNativeSplash.remove();
 
   runApp(const MyApp());
 }
@@ -20,109 +31,62 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CityScope',
       theme:  CityScopeTheme.getMainAppThemeData,
-      home: const LoginPage(),
-    );
+      initialRoute: '/splash',
+      routes: {
+        '/splash': (context) => SplashScreen(),
+        '/home': (context) => FeedScreen(),
+        });
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
+class ImageUpload extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _ImageUploadState createState() => _ImageUploadState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class _ImageUploadState extends State<ImageUpload> {
+  late String imageUrl;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    backgroundColor: Colors.white;
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text ("ABC", style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),),
-            Text ("ABC", style: TextStyle(
-              fontSize: 15.0,
-            ),),
-            Text ("ABC", style: TextStyle(
-              fontWeight: FontWeight.normal,
-            ),),
-
-            ElevatedButton(onPressed: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()));
-            }, child:  Text('Login Page'))
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    appBar: AppBar(
+    title: Text('Upload Image', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),),
+    centerTitle: true,
+    elevation: 0.0,
+    backgroundColor: Colors.white,
+    ),
+    body: Container()
     );
   }
+
+  // void _getPlace() async {
+  //   List<Placemark> newPlace = await placemarkFromCoordinates(position!.latitude, position!.longitude);
+  //
+  //   Placemark placeMark  = newPlace[0];
+  //   String? name = placeMark.name;
+  //   String? subLocality = placeMark.subLocality;
+  //   String? locality = placeMark.locality;
+  //   String? administrativeArea = placeMark.administrativeArea;
+  //   String? postalCode = placeMark.postalCode;
+  //   String? country = placeMark.country;
+  //   String? address = "${name}, ${subLocality}, ${locality}, ${administrativeArea} ${postalCode}, ${country}";
+  //
+  //   print(address);
+  //
+  //   setState(() {
+  //     _address = address; // update _address
+  //   });
+  // }
+  //
+  // @override
+  // void initState() {
+  //
+  //   super.initState();
+  //   _getPlace();
+  //
+  // }
 }
